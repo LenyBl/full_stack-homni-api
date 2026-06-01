@@ -1,17 +1,38 @@
 import { Controller } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entity/users.entity';
-import { Body, Post, HttpCode } from '@nestjs/common';
+import { Body, Post, Get, Delete, Patch, HttpCode, Param } from '@nestjs/common';
 
 
 @Controller('users')
 export class UsersController {
-    constructor(private readonly usersService: UsersService) {}
+    constructor(private readonly usersService: UsersService) { }
 
     @Post()
     @HttpCode(201)
-    async create(@Body() createUserDto: CreateUserDto) {
+    async create(@Body() createUserDto: CreateUserDto): Promise<CreateUserDto> {
         return this.usersService.create(createUserDto);
     }
+
+    @Get('email/:email')
+    @HttpCode(200)
+    async findByEmail(@Param('email') email: string): Promise<User | null> {
+        return this.usersService.findByEmail(email);
+    }
+
+    @Get(':id')
+    @HttpCode(200)
+    async findById(@Param('id') id: number): Promise<User | null> {
+        return this.usersService.findById(id);
+    }
+
+    @Delete(':id')
+    @HttpCode(200)
+    async remove(@Param('id') id: number): Promise<{ message: string }> {
+        return this.usersService.remove(id);
+    }
+
+
 }
