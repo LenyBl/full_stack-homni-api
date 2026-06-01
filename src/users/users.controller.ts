@@ -4,6 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entity/users.entity';
 import { Body, Post, Get, Delete, Patch, HttpCode, Param } from '@nestjs/common';
+import { Public } from '../auth/SkipAuth';
 
 
 @Controller('users')
@@ -16,6 +17,7 @@ export class UsersController {
         return this.usersService.create(createUserDto);
     }
 
+    @Public()
     @Get('email/:email')
     @HttpCode(200)
     async findByEmail(@Param('email') email: string): Promise<User | null> {
@@ -34,5 +36,9 @@ export class UsersController {
         return this.usersService.remove(id);
     }
 
-
+    @Patch(':id')
+    @HttpCode(200)
+    async update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<{ access_token: string}> {
+        return this.usersService.update(id, updateUserDto);
+    }
 }
