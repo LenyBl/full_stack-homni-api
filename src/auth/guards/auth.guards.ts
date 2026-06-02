@@ -1,7 +1,7 @@
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { IS_PUBLIC_KEY } from '../SkipAuth';
+import { IS_PUBLIC_KEY } from '../decorators/skip.auth';
 import * as dotenv from 'dotenv';
 
 dotenv.config();
