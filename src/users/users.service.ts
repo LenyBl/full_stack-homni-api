@@ -16,13 +16,13 @@ export class UsersService {
     ) { }
 
     async create(createUserDto: CreateUserDto): Promise<User> {
-        const { email, display_name, password_hash } = createUserDto;
+        const { email, display_name, password_hash, role } = createUserDto;
         if (await this.usersRepository.findOne({ where: { email } })) {
             throw new Error('Email already exists');
         }
         const hashedPassword = await bcrypt.hash(password_hash, 10);
         try {
-            const user = this.usersRepository.create({ email, display_name, password_hash: hashedPassword });
+            const user = this.usersRepository.create({ email, display_name, password_hash: hashedPassword, role });
             return await this.usersRepository.save(user);
         } catch (error) {
             throw new Error('Failed to create user');

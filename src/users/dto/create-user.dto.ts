@@ -13,4 +13,8 @@ export class CreateUserDto {
   @IsNotEmpty()
   @IsString()
   password_hash!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  role!: string;
 }

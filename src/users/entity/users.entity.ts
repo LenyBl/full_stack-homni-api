@@ -17,7 +17,7 @@ export class User {
     @Column()
     display_name!: string;
 
-    @Column({ default: 'admin' })
+    @Column()
     role!: string;
 
     @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
